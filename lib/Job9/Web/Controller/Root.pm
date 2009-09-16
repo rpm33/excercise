@@ -46,6 +46,7 @@ sub message :Path('message') :Args(0) {
     my $mes   = $c->model('Message')->insert({
       subject => $subject,
       body    => $body,
+      email   => $email,
     });
 
    Job9::Sender->new->send( $mes->id );
