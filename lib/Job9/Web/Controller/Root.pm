@@ -44,7 +44,7 @@ sub message :Path('message') :Args(0) {
     my $body  = $c->req->params->{body};
     my $sub   = $c->req->params->{subject};
     my $mes   = $c->model('Message')->insert({
-      subject => $subject,
+      subject => $sub,
       body    => $body,
       email   => $email,
     });
