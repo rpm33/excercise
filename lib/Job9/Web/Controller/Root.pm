@@ -28,9 +28,10 @@ Job9::Web::Controller::Root - Root Controller for Job9::Web
 
 sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
+}
 
-    # Hello World
-    $c->response->body( $c->welcome_message );
+sub message :Path('message') :Args(0) {
+    my ( $self, $c ) = @_;
 }
 
 sub default :Path {
