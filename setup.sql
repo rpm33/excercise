@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `email` varchar(64) NOT NULL,
+   `name` varchar(90) default 'nobody',
   PRIMARY KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
