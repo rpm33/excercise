@@ -15,9 +15,9 @@ __PACKAGE__->meta->make_immutable;
 
 sub send {
     my $self = shift;
-
+    my $id   = shift;
     my $client = TheSchwartz->new( databases => $self->databases );
-    $client->insert('Job9::SendMail', { key => 'value' });
+    $client->insert('Job9::SendMail', { id => $id });
 }
 
 1;
