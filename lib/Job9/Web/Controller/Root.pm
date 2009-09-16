@@ -4,6 +4,9 @@ use strict;
 use warnings;
 use parent 'Catalyst::Controller';
 
+use Job9::Sender;
+
+
 #
 # Sets the actions in this controller to be registered with no prefix
 # so they function identically to actions created in MyApp.pm
@@ -37,7 +40,20 @@ sub index :Path :Args(0) {
 
 sub message :Path('message') :Args(0) {
     my ( $self, $c ) = @_;
+    my $email = $c->session->{email};
+    my $body  = $c->req->params->{body};
+    my $sub   = $c->req->params->{subject};
+    my $mes   = $c->model('Message')->insert({
+      subject => $subject,
+      body    => $body,
+    });
+
+   Job9::Sender->new->send( $mes->id );
+    
 }
+
+
+
 
 sub default :Path {
     my ( $self, $c ) = @_;
