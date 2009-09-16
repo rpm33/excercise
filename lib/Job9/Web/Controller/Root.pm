@@ -43,6 +43,11 @@ sub message :Path('message') :Args(0) {
     my $email = $c->session->{email};
     my $body  = $c->req->params->{body};
     my $sub   = $c->req->params->{subject};
+
+    unless ( length $body and length $sub ) {
+       return $c->stash->{template} = 'message.tt'; 
+    }
+
     my $mes   = $c->model('Message')->insert({
       subject => $sub,
       body    => $body,
