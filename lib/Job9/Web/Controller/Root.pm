@@ -5,6 +5,7 @@ use warnings;
 use parent 'Catalyst::Controller';
 
 use Job9::Sender;
+use Job9::Schema;
 
 
 #
@@ -40,17 +41,23 @@ sub index :Path :Args(0) {
 
 sub message :Path('message') :Args(0) {
     my ( $self, $c ) = @_;
-    my $email = $c->session->{email};
-    my $body  = $c->req->params->{body};
-    my $sub   = $c->req->params->{subject};
-    my $mes   = $c->model('Message')->insert({
-      subject => $sub,
-      body    => $body,
-      email   => $email,
-    });
 
-   Job9::Sender->new->send( $mes->id );
-    
+    if ($c->req->param('submit')) {
+        my $email = $c->session->{email};
+        my $body  = $c->req->params->{body};
+        my $sub   = $c->req->params->{subject};
+        my $schema = Job9::Schema->connect(qw(dbi:mysql:dbname=test));
+        my $mes   = $schema->resultset('User')->find_or_create({
+            email => $email,
+        });
+        my $mes   = $schema->resultset('Message')->create({
+            subject => $sub,
+            body    => $body,
+            user_email   => $email,
+        });
+
+       Job9::Sender->new->send( $mes->id );
+    }
 }
 
 

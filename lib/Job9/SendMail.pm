@@ -3,6 +3,8 @@ package Job9::SendMail;
 use Moose;
 use namespace::clean -except => 'meta';
 use Job9::SendMail::Send;
+use Job9::Schema;
+use Data::Dumper;
 
 extends 'TheSchwartz::Worker';
 
@@ -13,7 +15,14 @@ sub work {
     my TheSchwartz::Job $job = shift;
 
     print "Workin' hard or hardly workin'? Hyuk!!\n";
-	Job9::SendMail::Send::email_send('matthew_ipd@clearstory.mints.ne.jp','hoge', 'fuga');
+    my $schema = Job9::Schema->connect(qw(dbi:mysql:dbname=test));
+    my $row = $schema->resultset('Message')->find({
+        id => $job->arg->{id},
+    },
+    {
+        prefetch => 'user_email',
+    });
+	Job9::SendMail::Send::email_send($row->get_column('user_email'), $row->subject, $row->body);
 
     $job->completed();
 }
