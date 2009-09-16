@@ -1,0 +1,10 @@
+<style>
+label {
+  display: block;
+}
+</style>
+<form action="[% c.uri_for('message') %]" method="post">
+<label>subject: <input type="text" name="subject" /></label>
+<label>message: <textarea name="body"></textarea></label>
+<input type="submit" name="submit" />
+</form>
