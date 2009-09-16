@@ -3,6 +3,7 @@ label {
   display: block;
 }
 </style>
+<p>Hi, [% c.session.email %]</p>
 <form action="[% c.uri_for('message') %]" method="post">
 <label>subject: <input type="text" name="subject" /></label>
 <label>message: <textarea name="body"></textarea></label>

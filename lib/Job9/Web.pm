@@ -14,9 +14,15 @@ use Catalyst::Runtime 5.70;
 #                 directory
 
 use parent qw/Catalyst/;
-use Catalyst qw/-Debug
-                ConfigLoader
-                Static::Simple/;
+use Catalyst qw(
+    -Debug
+    ConfigLoader
+    Static::Simple
+    Session
+    Session::State::Cookie
+    Session::Store::FastMmap
+);
+
 our $VERSION = '0.01';
 
 # Configure the application.

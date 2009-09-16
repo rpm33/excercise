@@ -28,6 +28,11 @@ Job9::Web::Controller::Root - Root Controller for Job9::Web
 
 sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
+
+    if ($c->req->param('submit')) {
+        $c->session->{email} = $c->req->param('email');
+        $c->res->redirect( $c->uri_for('message') );
+    }
 }
 
 sub message :Path('message') :Args(0) {
