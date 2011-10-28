@@ -14,7 +14,7 @@ Job9::Web::View::TT - TT View for Job9::Web
 
 =head1 DESCRIPTION
 
-TT View for Job9::Web. 
+TT View for Job9::Web.
 
 =head1 SEE ALSO
 
